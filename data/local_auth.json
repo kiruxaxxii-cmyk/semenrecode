@@ -1,0 +1,300 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "email": "admin@local",
+      "salt": "551d5178b560961e",
+      "password": "fd43311308806d9e9a2f8e0563ee44b06f0940c24c0f1fe85259d623603e726a",
+      "role": "admin",
+      "hasSubscription": true,
+      "subscriptionUntil": "2099-12-31T00:00:00.000Z",
+      "hwid": "-",
+      "registeredAt": "2026-07-11T15:00:45.214723+00:00"
+    },
+    {
+      "id": 2,
+      "username": "demo",
+      "email": "demo@local.updated",
+      "salt": "f9c5231723b79900",
+      "password": "8984ab8e638a9e4a6979d58e2643ed35726bdee88e31f6150da738098c9980e6",
+      "role": "MEDIA",
+      "hasSubscription": true,
+      "subscriptionUntil": "2026-08-10T16:53:16.048258+00:00",
+      "hwid": "-",
+      "registeredAt": "2026-07-11T15:05:38.309672+00:00"
+    },
+    {
+      "id": 3,
+      "username": "newuser99",
+      "email": "new@test.com",
+      "salt": "d57bd36911dabbf3",
+      "password": "e2cf6df4e2203f92ddc33b5e477c1f6b98c5fbe06f88b22a9d0a2e49b827b449",
+      "role": "USER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-01-01T00:00:00Z"
+    },
+    {
+      "id": 4,
+      "username": "user777",
+      "email": "user777@test.local",
+      "salt": "abf2d40a364b266c",
+      "password": "d2e75ddb0a2271e50563c6d1fb452a83173e4f3b85f35135f5b4e8e7daefce66",
+      "role": "USER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-11T00:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "username": "flowtest",
+      "email": "flow@test.local",
+      "salt": "3c9d368a37855f9e",
+      "password": "b34a0a34c14cef64bb4b449bee9387b0f6d5e1bf38d032b1c1254ce811be6a01",
+      "role": "USER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-11T15:24:44.332580+00:00"
+    },
+    {
+      "id": 6,
+      "username": "browser_test_user",
+      "email": "browser_test@local.dev",
+      "salt": "f3ee4945b4a0c28b",
+      "password": "4734bb968db6f925924db4159bb47041350aead5755fa4b23cc81d095f655395",
+      "role": "USER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-11T15:32:32.179Z"
+    },
+    {
+      "id": 7,
+      "username": "hi",
+      "email": "hi@gmail.com",
+      "salt": "c54fc072bd53c110",
+      "password": "95378b8b410e135eae842db86a4f9ef2c2f117514d0212a0673923816ccec0d3",
+      "role": "USER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-11T15:33:13.776Z"
+    },
+    {
+      "id": 8,
+      "username": "KODEK",
+      "email": "svitik@eblan.cocal",
+      "salt": "3073c72e07cceecd",
+      "password": "2c698750de2b7e487942e167ecfb22834ee58853c8d2f889857b57f5a19a1de2",
+      "role": "USER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-12T14:49:31.218Z"
+    },
+    {
+      "id": 9,
+      "username": "svitik",
+      "email": "baran@eblan.cocal",
+      "salt": "fce6998c304c275b",
+      "password": "7dd4a379353db528d38985d7964cc436dbd24082aa3a925720d95a223611f20a",
+      "role": "OWNER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-14T19:23:27.618Z"
+    },
+    {
+      "id": 10,
+      "username": "testuser",
+      "email": "test@test.com",
+      "salt": "2ba3ddf6571c4b99",
+      "password": "60d8e112ab8f199f4f540697faab98bd31fb84bb3f2b100f16eccffea4bcfd49",
+      "role": "USER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-18T18:25:42.729636+00:00"
+    }
+  ],
+  "sessions": {
+    "u9o8cfraMMbzlgB5T6UCgz2WSs0j512HutGnju9bAxA": 1,
+    "L7_tdyd08hysd2HrVifFaZQYmLd6pIJ4woedMWCdmsw": 2,
+    "M-DykByqyoQUiaSzv5OsnROmZFtM0fdpl5sNiPxbTb4": 3,
+    "Bbh07dgrkvpDtwtswZhVBoIg9IUhDsrjDUyd7C-r4jI": 4,
+    "g_N-cwyxpRr9BF0jUVzGjspKw9jyRJySoh3QXSKmFXc": 5,
+    "PX5S4gia1vnZwMHXWxxpA5_uPTQ5lvtON5lnKl7uVss": 6,
+    "mredrQ5WXdDoO2BIN9m65TcBqIawS2iOpdJgYFmHIY0": 7,
+    "9lllQdiTFYxhmA4jsTO8FFQOUwX3QZX_k7mLsVpnGQA": 7,
+    "Nc59c2wx2RADptKpL7ndpxo1r9qVRbjIonsgMxTpUTg": 1,
+    "ftTrbp1P-ZBb8d3gl6lVqMCW3yWuDEZ6BdzwlIAi5PM": 1,
+    "VeRo5il9THTqjRtf07ciwLo4h4BGk8oeahs9_nsFL6g": 1,
+    "MGDZRw_YJfQS4TPVqGWcWknkEysnjntrbw4Z2irPHtA": 1,
+    "2DQP1s8EgCc8QWRN6KyS2IvQgWuwiKLZ3FCjF4U5Rrk": 1,
+    "AnKbAyLKQ6CRP30bEH_5l33RX0jNY13uosD0WFcrm8c": 1,
+    "OwS26FU8OJbuyus9Dr36PzTmLLGmagk_M1HFFOngwz0": 1,
+    "jj22wgC55aQGL3uQbgsZuItkvYmxqWxGqRbRh4t8fn4": 2,
+    "fmE41NJFnSPb6kaNU3pjqI0sAiOYwhcvW0AGENmMvc0": 1,
+    "fNiNXSmc7jGfqTHks08itsYkNM1makcpLNFKED-U_-4": 8,
+    "-BYd7NJYH4OTkWopoAuhWOmsR0aBwmBFHKFBhIgWHy0": 8,
+    "9I68o6ZbnfoKke_yB2KOTu7rMJAM8t1TTPdksbM-oJc": 1,
+    "oc6PwWaF6E3787YIwaarPOJdkH4Z-OmYPSDmzqwNdd8": 9,
+    "9VViVi6srWvbC_2EsO_dkx15E6tXso38a8B_p2guQnQ": 9,
+    "Z5vCrmtM0wt2istDrAEYR0UvHFmNnSbjkbohu-9LU2E": 9,
+    "bBjTkYXOxtBQQxTwJm90iaHlKGhmQqPtHYqC-jkYMj0": 1,
+    "En_Gv8i_5sHuifgbD1Q8HeRrv0rsw-w-nYQpIdGna5E": 10,
+    "JM75lgCiX7LUBx8nLfOp29TgfydXqel_XCrSbJdcyOc": 1,
+    "LDdiVp1tknDuTsAWXVZMxJEsPzPSNaB5XTiLinppWQA": 1,
+    "KF3Yqn89wTV61RymUeIoUCQCrhRfQPyDIFcfZd_mmwE": 1,
+    "LqZMfp6K234CdZYiv3SMxllMaZK08cEbjamcYEKS_OM": 1,
+    "0kPYfjRBglNnwxLV6QKTx5UC-NZ5RJm1g8NDc6rwClg": 1,
+    "jBbLrrI3KGpbVZD5FVj4HUnY1WojnzGYOzKKT9aVV1A": 1,
+    "QIG4s9ypdY0wozlbHhFOMG9ZzWetxLYcQpDo1sS5ok0": 1,
+    "VtEvXWFLJ5ZirDkZAn1FDSa-qrPVUF5PT5J1t3RFjrI": 1,
+    "-zWC7Be07yGgvbZj-c1JKbdASOBQAx5FwPKsrnOO8_M": 1,
+    "JVCPE2IAu-iE7-GZptiHnMZ62iEIiuAEkKOCsr8EycI": 1,
+    "dENUSvZkt2CG-ajFn-0bem0J2kHgFIjopuYqFJY12IE": 1,
+    "3e6ETLGjYxFz_kXyRqix53V7uvgdnLqZPqgwd-XePmM": 1,
+    "eIEvyYBThP8Vp9LhNiqn5SAu8Uc1ovbILU4H9bNwaI0": 1,
+    "Hfar7mc3JiIZwp51yKm_WNNS8xPz7XGLkjvwUkBvibc": 1,
+    "VqxOszpkW1FPN1yabqsFtKSWw3O6nG3DdEtcHTrJoIY": 1,
+    "Vg7X0eRARS7btK7MoaRtdgTO305LYCu2Zr76LZTV9o8": 1,
+    "l0_bKeosM3golMik2IG-H-xUA0Y0sekV4lxsfGvgzNw": 1,
+    "wN1lDvAj40gwtvvBCrBwi3KQ1iMpkK2VjRIjt_O3Shk": 1,
+    "30JfkRie1ehVxg0LpMNC7FLEUxunN5DCDKpT3adLkyA": 1,
+    "bYbMqiD73HHWThGU99CY5CuNB3T_wWgH3GLYOz0i2EI": 11,
+    "QBgNqv_qxNs7h-DozEBeOIdJd2nFLbtA8LgPJbI-WOo": 1,
+    "lHmHHRPsqt-7qWWQaYGVA-RnCHUUVwz2zuCnU8vQQ3c": 1,
+    "dAXZQF2L5hL0tBqdqi5A4heutg5A2z9ffv-9YmLZwss": 1,
+    "2OAmQHgqGHfEie214m6DuLZmL6WCAhriWVyzlRlMsoo": 1,
+    "qxQzzbrI3giKOarQTnro57VfBccNqvCwat97U09C07Q": 1,
+    "uRwBQuY-wRzmJ1m1_AJAbO5iC0oRgKQytI0iuuz56C4": 1,
+    "QFBbn_K_xjL6TmnrcvkTdYgQQoj06yd27vJ0FtHOds0": 1
+  },
+  "next_id": 12,
+  "keys": {
+    "regular": [
+      {
+        "id": 4,
+        "value": "SKY-FWDF-3K9L",
+        "days": 30,
+        "used": 1,
+        "entDate": "2026-07-11T16:41:32.133459+00:00",
+        "activationId": 2
+      },
+      {
+        "id": 5,
+        "value": "SKY-DO9D-P7DU",
+        "days": 30,
+        "used": 1,
+        "entDate": "2026-07-11T16:53:59.931793+00:00",
+        "activationId": 1
+      },
+      {
+        "id": 6,
+        "value": "SKY-7265-L290",
+        "days": 30,
+        "used": 1,
+        "entDate": "2026-07-11T16:53:59.931838+00:00",
+        "activationId": 1
+      },
+      {
+        "id": 7,
+        "value": "SKY-N1OD-FPM2",
+        "days": 14,
+        "used": 0,
+        "entDate": "2026-07-12T17:57:34.255220+00:00",
+        "activationId": null
+      },
+      {
+        "id": 8,
+        "value": "SKY-KB2G-4CPB",
+        "days": 1,
+        "used": 0,
+        "entDate": "2026-07-14T19:20:58.970000+00:00",
+        "activationId": null
+      },
+      {
+        "id": 9,
+        "value": "SKY-EM8L-MOV1",
+        "days": 1,
+        "used": 0,
+        "entDate": "2026-07-14T20:08:42.699688+00:00",
+        "activationId": null
+      },
+      {
+        "id": 10,
+        "value": "SKY-PW3N-LZQI",
+        "days": 1,
+        "used": 1,
+        "entDate": "2026-07-15T12:03:16.385012+00:00",
+        "activationId": 9
+      }
+    ],
+    "hwid": []
+  },
+  "promos": [
+    {
+      "id": 1,
+      "value": "Р В°",
+      "discount": 5,
+      "outActive": 55,
+      "entActive": 0,
+      "outDate": "2026-09-04T16:14:34.301607+00:00",
+      "balance": 0
+    },
+    {
+      "id": 2,
+      "value": "baran",
+      "discount": 10,
+      "outActive": 10,
+      "entActive": 0,
+      "outDate": "2026-07-21T19:34:33.617207+00:00",
+      "balance": 0
+    }
+  ],
+  "payments": {
+    "balances": {},
+    "transactions": []
+  },
+  "next_key_id": 11,
+  "next_promo_id": 3,
+  "maintenance": {
+    "enabled": false
+  },
+  "session_meta": {
+    "QBgNqv_qxNs7h-DozEBeOIdJd2nFLbtA8LgPJbI-WOo": {
+      "created": 1784453854.498041,
+      "ip": "127.0.0.1"
+    },
+    "lHmHHRPsqt-7qWWQaYGVA-RnCHUUVwz2zuCnU8vQQ3c": {
+      "created": 1784454019.331096,
+      "ip": "127.0.0.1"
+    },
+    "dAXZQF2L5hL0tBqdqi5A4heutg5A2z9ffv-9YmLZwss": {
+      "created": 1784454056.000374,
+      "ip": "127.0.0.1"
+    },
+    "2OAmQHgqGHfEie214m6DuLZmL6WCAhriWVyzlRlMsoo": {
+      "created": 1784454491.619589,
+      "ip": "127.0.0.1"
+    },
+    "qxQzzbrI3giKOarQTnro57VfBccNqvCwat97U09C07Q": {
+      "created": 1784454760.437666,
+      "ip": "127.0.0.1"
+    },
+    "uRwBQuY-wRzmJ1m1_AJAbO5iC0oRgKQytI0iuuz56C4": {
+      "created": 1784454771.254484,
+      "ip": "127.0.0.1"
+    },
+    "QFBbn_K_xjL6TmnrcvkTdYgQQoj06yd27vJ0FtHOds0": {
+      "created": 1784455118.209166,
+      "ip": "127.0.0.1"
+    }
+  },
+  "admin_panel_password": "f50f9b420f1e1c24:5678184c78f15f1a51d4f226f49214bd9fa1f7922091034abaa98b8c556619e8"
+}

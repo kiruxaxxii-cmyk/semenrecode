@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SemenRecode — Register</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='youth.css') }}?v=8">
+</head>
+<body>
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loading-logo"></div>
+    <div class="loading-text">Creating account...</div>
+    <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+  </div>
+
+  <div class="app app--auth">
+    <header>
+      <div class="header-content">
+        <a class="header-brand-link" href="/">
+          <div class="header-logo" aria-hidden="true"></div>
+          <span class="header-brand">SemenRecode</span>
+        </a>
+        <nav class="header-nav" aria-label="Main navigation">
+          <a href="/login">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            <span>Sign In</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="auth-overlay">
+      <form class="auth-form" onsubmit="submitForm(event, '/api/auth/register', '/login')">
+        <div class="auth-logo" aria-hidden="true"></div>
+        <div class="auth-view">
+          <h2 class="auth-title">Create account</h2>
+          <p class="auth-subtitle">Register to get started.</p>
+        </div>
+        <div class="message"></div>
+        <label class="auth-field">
+          <span class="auth-field-icon">@</span>
+          <input type="text" name="username" required placeholder="Username" autocomplete="username">
+        </label>
+        <label class="auth-field">
+          <span class="auth-field-icon">*</span>
+          <input type="password" name="password" required placeholder="Password" autocomplete="new-password">
+        </label>
+        <button type="submit" class="auth-submit">Register</button>
+        <p class="auth-redirect">Already have an account? <a href="/login">Sign in</a></p>
+      </form>
+    </main>
+  </div>
+
+  <div class="page-transition" id="pageTransition"></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SemenRecode — {{ user.username }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='youth.css') }}?v=8">
+</head>
+<body>
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loading-logo"></div>
+    <div class="loading-text">Loading profile...</div>
+    <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+  </div>
+
+  <div class="app app--inner">
+    <header>
+      <div class="header-content">
+        <a class="header-brand-link" href="/">
+          <div class="header-logo" aria-hidden="true"></div>
+          <span class="header-brand">SemenRecode</span>
+        </a>
+        <nav class="header-nav" aria-label="Main navigation">
+          <a href="#" onclick="logout()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            <span>Sign Out</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="profile-content" aria-label="Profile">
+      <div class="profile-card">
+        <div class="profile-avatar" style="display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.06);font-size:28px;font-weight:600;color:#fff;">{{ user.username[0] | upper }}</div>
+        <h1 class="profile-name"><span class="animated-gradient-text">{{ user.username }}</span></h1>
+        <p class="profile-id">UID: #{{ user.id }} &middot; HWID: Locked</p>
+        <div class="profile-meta">
+          <div class="profile-meta-item">
+            <span class="profile-meta-label">Joined</span>
+            <span class="profile-meta-value">{{ user.created_at[:10] }}</span>
+          </div>
+          <div class="profile-meta-item">
+            <span class="profile-meta-label">Plan</span>
+            <span class="profile-meta-value">Lifetime</span>
+          </div>
+          <div class="profile-meta-item">
+            <span class="profile-meta-label">Status</span>
+            <span class="profile-meta-value" style="color:#6ee7b7;">Active</span>
+          </div>
+          <div class="profile-meta-item">
+            <span class="profile-meta-label">Version</span>
+            <span class="profile-meta-value">v4.21</span>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <button class="profile-btn profile-btn--primary" onclick="alert('Download link sent to your Discord DM.')">
+            Download v4.21
+          </button>
+          <button class="profile-btn profile-btn--outline" onclick="logout()">Sign Out</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="page-transition" id="pageTransition"></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

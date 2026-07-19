@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Site</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <script type="module" crossorigin src="/assets/local.bundle.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-h4STkTJJ.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+    // Anti-theft protections
+    !function(){
+      document.addEventListener('contextmenu', function(e){ e.preventDefault(); return false; });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) || (e.ctrlKey && ['U','S'].includes(e.key.toUpperCase()))) {
+          e.preventDefault(); return false;
+        }
+      });
+      document.addEventListener('dragstart', function(e){ if (e.target.tagName === 'IMG') { e.preventDefault(); return false; } });
+      document.addEventListener('copy', function(e){ e.preventDefault(); return false; });
+    }();
+
+    // Admin panel password overlay function
+    function checkAdminPanel() {
+      if (window.location.pathname !== '/adminsvitiksemenrecodekrytoydebeldaunsoft12312dsfksdfskfs') return;
+      if (document.getElementById('admin-panel-overlay')) return;
+      var pTok = sessionStorage.getItem('admin_panel_token');
+      if (pTok) return;
+      var overlay = document.createElement('div');
+      overlay.id = 'admin-panel-overlay';
+      overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:rgba(0,0,0,0.88);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);';
+      overlay.innerHTML = '<div style="color:#fff;font-family:Inter,sans-serif;font-size:1.2rem;font-weight:600;letter-spacing:-0.3px;">Admin Panel Access</div><div style="color:rgba(255,255,255,0.4);font-family:Inter,sans-serif;font-size:0.8rem;margin-bottom:4px;">Enter panel password</div><input id="admin-pwd-input" type="password" placeholder="Password" style="padding:12px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#fff;font-size:0.95rem;outline:none;width:280px;text-align:center;font-family:inherit;"><div id="admin-pwd-error" style="color:#ff6b6b;font-size:0.8rem;display:none;font-family:Inter,sans-serif;"></div><button id="admin-pwd-submit" style="padding:10px 28px;border-radius:8px;border:none;background:#fff;color:#000;font-size:0.85rem;cursor:pointer;font-weight:600;font-family:Inter,sans-serif;">Unlock</button>';
+      document.body.appendChild(overlay);
+      setTimeout(function(){ var inp = document.getElementById('admin-pwd-input'); if(inp) inp.focus(); }, 100);
+      document.getElementById('admin-pwd-submit').onclick = function(){
+        var val = document.getElementById('admin-pwd-input').value;
+        if (!val) return;
+        this.disabled = true;
+        this.textContent = '...';
+        fetch('/api/admin/panel-auth', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:val})}).then(function(r){return r.json();}).then(function(d){
+          if (d.panel_token) {
+            sessionStorage.setItem('admin_panel_token', d.panel_token);
+            overlay.remove();
+          } else {
+            var err = document.getElementById('admin-pwd-error');
+            err.textContent = d.error || 'Wrong password';
+            err.style.display = 'block';
+            document.getElementById('admin-pwd-submit').disabled = false;
+            document.getElementById('admin-pwd-submit').textContent = 'Unlock';
+          }
+        }).catch(function(){
+          var err = document.getElementById('admin-pwd-error');
+          err.textContent = 'Connection error';
+          err.style.display = 'block';
+          document.getElementById('admin-pwd-submit').disabled = false;
+          document.getElementById('admin-pwd-submit').textContent = 'Unlock';
+        });
+      };
+      document.getElementById('admin-pwd-input').onkeydown = function(e){
+        if (e.key === 'Enter') document.getElementById('admin-pwd-submit').click();
+      };
+    }
+    // Watch URL changes for admin panel
+    window.addEventListener('popstate', checkAdminPanel);
+    checkAdminPanel();
+    (function(){
+      var timer = setInterval(function(){
+        // Stats
+        var hero = document.querySelector('.hero-content');
+        if (hero && !hero.querySelector('.hero-stats')) {
+          var desc = hero.querySelector('.hero-description');
+          if (desc) {
+            var wrap = document.createElement('div');
+            wrap.style.cssText = 'display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin:24px auto 28px;max-width:400px;';
+            wrap.className = 'hero-stats';
+            wrap.innerHTML = '<div style="flex:1;min-width:120px;text-align:center;padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 1px rgba(255,255,255,0.04);"><div style="font-family:Inter,sans-serif;font-size:1.4rem;font-weight:600;color:#fff;letter-spacing:-0.5px;line-height:1;">617</div><div style="font-family:Inter,sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:4px;letter-spacing:0.5px;">ЗАРЕГИСТРИРОВАНО</div></div><div style="flex:1;min-width:120px;text-align:center;padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.03);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:inset 0 1px rgba(255,255,255,0.04);"><div style="font-family:Inter,sans-serif;font-size:1.4rem;font-weight:600;color:#fff;letter-spacing:-0.5px;line-height:1;">1,798</div><div style="font-family:Inter,sans-serif;font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:4px;letter-spacing:0.5px;">ЗАПУСКОВ</div></div>';
+            desc.parentNode.insertBefore(wrap, desc.nextSibling);
+          }
+        }
+        // Fotter credit text
+        var credit = document.querySelector('.footer__credit');
+        if (credit) {
+          credit.innerHTML = 'desigined by SVITIK special for AntiSk3dLeak and CabbitGuard and Dima Moriarti';
+        }
+        // Support section -> @SemenRecodesup
+        var support = document.querySelector('.footer__support');
+        if (support) {
+          var parent = support.parentNode;
+          var link = document.createElement('a');
+          link.className = 'footer__link';
+          link.href = 'https://t.me/SemenRecodesup';
+          link.target = '_blank';
+          link.rel = 'noreferrer';
+          link.textContent = '@SemenRecodesup';
+          parent.replaceChild(link, support);
+        }
+        checkAdminPanel();
+        // Maintenance toggle in admin panel
+        if (window.location.pathname === '/adminsvitiksemenrecodekrytoydebeldaunsoft12312dsfksdfskfs') {
+          var rv = document.querySelector('.route-view');
+          if (rv && !document.querySelector('.maint-toggle')) {
+            var pTok = sessionStorage.getItem('admin_panel_token');
+            if (!pTok) return;
+            var tok = localStorage.getItem('velka_token') || sessionStorage.getItem('velka_token') || localStorage.getItem('token') || '';
+            if (tok) {
+              document.cookie = 'mt_token=' + tok + '; path=/; max-age=' + (86400*30);
+              fetch('/api/maintenance').then(function(r){return r.json();}).then(function(d){
+                var on = d.enabled === true;
+                var div = document.createElement('div');
+                div.className = 'maint-toggle';
+                div.style.cssText = 'position:relative;z-index:999;margin:0 16px;padding:8px 14px;border-radius:8px;border:1px solid ' + (on ? 'rgba(255,80,80,0.3)' : 'rgba(80,200,80,0.2)') + ';background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:0.78rem;color:rgba(255,255,255,0.7);';
+                div.innerHTML = '<span>' + (on ? 'Техработы ВКЛ' : 'Техработы ВЫКЛ') + '</span><button style="padding:5px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#fff;cursor:pointer;font-size:0.75rem;font-family:inherit;">' + (on ? 'Выключить' : 'Включить') + '</button>';
+                div.querySelector('button').onclick = function(){
+                  this.disabled = true;
+                  this.textContent = '...';
+                  var pt = sessionStorage.getItem('admin_panel_token')||'';
+                  fetch('/api/admin/maintenance', {method:'POST',headers:{'Authorization':'Bearer '+tok,'X-Admin-Panel-Token':pt,'Content-Type':'application/json'},body:JSON.stringify({enabled:!on})}).then(function(){location.href = '/?mt=' + tok;}).catch(function(){location.href = '/?mt=' + tok;});
+                };
+                rv.insertBefore(div, rv.firstChild);
+              });
+            }
+          }
+        }
+        // Keep favicon as PNG (React overrides to SVG "S")
+        !function(){
+          var fi = document.querySelector('link[rel="icon"]');
+          if (!fi) {
+            fi = document.createElement('link');
+            fi.rel = 'icon';
+            document.head.appendChild(fi);
+          }
+          function setPng() {
+            if (fi._protecting) return;
+            fi._protecting = true;
+            fi.type = 'image/png';
+            fi.href = '/static/favicon.png';
+            fi._protecting = false;
+          }
+          setPng();
+          var mo = new MutationObserver(function(){
+            if (fi.type !== 'image/png') setPng();
+          });
+          mo.observe(fi, {attributes: true, attributeFilter: ['type', 'href']});
+        }();
+      }, 200);
+    })();
+    </script>
+  </body>
+</html>
