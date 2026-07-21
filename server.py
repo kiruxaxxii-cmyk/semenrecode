@@ -243,9 +243,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return
         self.send_error(404)
 
+    def _get_client_ip(self) -> str:
+        cf_ip = self.headers.get("CF-Connecting-IP")
+        if cf_ip: return cf_ip.strip()
+        xfwd = self.headers.get("X-Forwarded-For")
+        if xfwd: return xfwd.split(",")[0].strip()
+        xreal = self.headers.get("X-Real-IP")
+        if xreal: return xreal.strip()
+        return self.client_address[0]
+
     def _request_headers(self) -> dict[str, str]:
         headers = {k: v for k, v in self.headers.items()}
-        headers["X-Real-IP"] = self.client_address[0]
+        headers["X-Real-IP"] = self._get_client_ip()
         return headers
 
     def _read_body(self) -> bytes | None:
@@ -307,7 +316,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             with local_auth._LOCK:
                 data = local_auth._load()
                 data.setdefault("logs", [])
-                ip = self.client_address[0]
+                ip = self._get_client_ip()
                 # Avoid logging the same IP rapidly
                 recent = False
                 for log in data["logs"][:10]:
