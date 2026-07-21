@@ -1,0 +1,5 @@
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48' fill='none'>
+  <rect width='48' height='48' rx='12' fill='#0088cc'/>
+  <path d='M34 24c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10 10 4.477 10 10z' fill='#fff' opacity='0.2'/>
+  <text x='24' y='31' text-anchor='middle' fill='#fff' font-family='system-ui,sans-serif' font-weight='700' font-size='22'>$</text>
+</svg>

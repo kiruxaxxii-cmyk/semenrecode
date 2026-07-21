@@ -1,0 +1,169 @@
+{
+  "users": [
+    {
+      "id": 10,
+      "username": "dleamixd",
+      "email": "dleamixd@semen.recode",
+      "salt": "4072bea68264bac9",
+      "password": "964fa3d6f4e26d3c1be8a5c6674f20081f4de095a42b1d60d0b350727c958ef7",
+      "role": "USER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-20T13:51:36.019Z"
+    },
+    {
+      "id": 1293,
+      "username": "123123",
+      "email": "123213@gmail.com",
+      "salt": "31533c56900f4412",
+      "password": "fad0cf31330601a6f9e0d098acc03c7251cb1ba6dbc38afa7fd110eac8bc9143",
+      "role": "USER",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-20T13:52:59.821Z"
+    },
+    {
+      "id": 1294,
+      "username": "dimagazprom",
+      "email": "dima@anongrief.fun",
+      "salt": "da5f44031a5ab93a",
+      "password": "0a9e885f5d2c0ee35a6e227eaa3e3473f86456be1f94e6eb70fbcf1762bb35ff",
+      "role": "admin",
+      "hasSubscription": false,
+      "subscriptionUntil": null,
+      "hwid": "-",
+      "registeredAt": "2026-07-20T16:43:37.561473+00:00"
+    },
+    {
+      "id": 1295,
+      "username": "svitikprota",
+      "email": "svitik@anongrief.fun",
+      "salt": "dabfb2d2a7b924bb",
+      "password": "e928d909e6a2365b3a496fd417b36595beb24c3e131eeba2d0beadbbec0e5a69",
+      "role": "OWNER",
+      "hasSubscription": true,
+      "subscriptionUntil": "2026-07-22T14:54:07.534879+00:00",
+      "hwid": "-",
+      "registeredAt": "2026-07-20T16:49:55.258824+00:00"
+    }
+  ],
+  "sessions": {
+    "u9o8cfraMMbzlgB5T6UCgz2WSs0j512HutGnju9bAxA": 1,
+    "Nc59c2wx2RADptKpL7ndpxo1r9qVRbjIonsgMxTpUTg": 1,
+    "ftTrbp1P-ZBb8d3gl6lVqMCW3yWuDEZ6BdzwlIAi5PM": 1,
+    "VeRo5il9THTqjRtf07ciwLo4h4BGk8oeahs9_nsFL6g": 1,
+    "MGDZRw_YJfQS4TPVqGWcWknkEysnjntrbw4Z2irPHtA": 1,
+    "2DQP1s8EgCc8QWRN6KyS2IvQgWuwiKLZ3FCjF4U5Rrk": 1,
+    "AnKbAyLKQ6CRP30bEH_5l33RX0jNY13uosD0WFcrm8c": 1,
+    "OwS26FU8OJbuyus9Dr36PzTmLLGmagk_M1HFFOngwz0": 1,
+    "fmE41NJFnSPb6kaNU3pjqI0sAiOYwhcvW0AGENmMvc0": 1,
+    "9I68o6ZbnfoKke_yB2KOTu7rMJAM8t1TTPdksbM-oJc": 1,
+    "25KczIvzGcav6eYa79PzjYG-9jqZQO7DiuSlKA_3G8k": 1,
+    "EvHi0f-N2OaxzG-wFPIMRTa_DnNNxeEq7bWAJWGCxUA": 10,
+    "dmyVPohAUImLmn-VbEQVNjBWq9Q29qcp_Q46ftwPvbE": 10,
+    "gdmOBgbx8wDzHDBcVIOruGUf3GLxJbiZ440Dc4coFXY": 1293,
+    "yDDI-IyB844LPJx3pgThDXT-aXhSccf2gdYRxJS20sQ": 1293,
+    "OfodQR8fQZdXiu3NncHbHBNNZXEWsBRtLyh7w46wzLo": 1294,
+    "C-RsXk2tOSw-1yV1KgTPffPKqnD6aKpp4Z3maNrH9d4": 1295,
+    "ZTTGVwJ24KJimcLywrKSDXEF5b5cD-Oh8GY6Gs96_jw": 1295,
+    "A7FyDnYE1_AD40yCHDqHodlDXBQkedPZ0OfmU2pzL6E": 1295
+  },
+  "next_id": 1296,
+  "keys": {
+    "regular": [
+      {
+        "id": 4,
+        "value": "SKY-FWDF-3K9L",
+        "days": 30,
+        "used": 1,
+        "entDate": "2026-07-11T16:41:32.133459+00:00",
+        "activationId": 2
+      },
+      {
+        "id": 5,
+        "value": "SKY-DO9D-P7DU",
+        "days": 30,
+        "used": 1,
+        "entDate": "2026-07-11T16:53:59.931793+00:00",
+        "activationId": 1
+      },
+      {
+        "id": 6,
+        "value": "SKY-7265-L290",
+        "days": 30,
+        "used": 1,
+        "entDate": "2026-07-11T16:53:59.931838+00:00",
+        "activationId": 1
+      },
+      {
+        "id": 7,
+        "value": "SKY-N1OD-FPM2",
+        "days": 14,
+        "used": 0,
+        "entDate": "2026-07-12T17:57:34.255220+00:00",
+        "activationId": null
+      },
+      {
+        "id": 8,
+        "value": "SKY-KB2G-4CPB",
+        "days": 1,
+        "used": 0,
+        "entDate": "2026-07-14T19:20:58.970000+00:00",
+        "activationId": null
+      },
+      {
+        "id": 9,
+        "value": "SKY-EM8L-MOV1",
+        "days": 1,
+        "used": 0,
+        "entDate": "2026-07-14T20:08:42.699688+00:00",
+        "activationId": null
+      },
+      {
+        "id": 10,
+        "value": "SKY-PW3N-LZQI",
+        "days": 1,
+        "used": 1,
+        "entDate": "2026-07-15T12:03:16.385012+00:00",
+        "activationId": 9
+      },
+      {
+        "id": 11,
+        "value": "SKY-FCQL-GNBT",
+        "days": 1,
+        "used": 1,
+        "entDate": "2026-07-21T14:50:40.703869+00:00",
+        "activationId": 1295
+      }
+    ],
+    "hwid": []
+  },
+  "promos": [
+    {
+      "id": 1,
+      "value": "а",
+      "discount": 5,
+      "outActive": 55,
+      "entActive": 0,
+      "outDate": "2026-09-04T16:14:34.301607+00:00",
+      "balance": 0
+    },
+    {
+      "id": 2,
+      "value": "baran",
+      "discount": 10,
+      "outActive": 10,
+      "entActive": 0,
+      "outDate": "2026-07-21T19:34:33.617207+00:00",
+      "balance": 0
+    }
+  ],
+  "payments": {
+    "balances": {},
+    "transactions": []
+  },
+  "next_key_id": 12,
+  "next_promo_id": 3
+}

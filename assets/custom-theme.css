@@ -1,0 +1,412 @@
+/* =========================================================================
+   LIQUID GLASS HEADER & CARDS ONLY
+   ========================================================================= */
+
+/* Make the background image cover the whole site so glassmorphism works everywhere */
+body, html, #root, .app-wrapper, .app--inner {
+  background: url('/assets/svitik1.png?v=999') center top / cover no-repeat fixed !important;
+}
+
+/* Remove background from the giant parent container so it doesn't block the background image */
+.header {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Apply Liquid Glass ONLY to the outer pill container */
+.header-content {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(40px) saturate(200%) brightness(110%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(110%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 
+              0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 24px !important;
+}
+
+/* Ensure the inner nav list has no background or border of its own */
+.nav, .header-nav {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================================
+   GLOWING ORANGE FEATURE CARDS
+   ========================================================================= */
+.feature-card, .advantage-card, .review-card, .version-card {
+  /* Dark background with orange tint to hide the blue clouds from the main background */
+  background: linear-gradient(135deg, rgba(255, 138, 101, 0.15) 0%, rgba(15, 10, 10, 0.95) 100%) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  
+  /* Beautiful orange border */
+  border: 1px solid rgba(255, 138, 101, 0.4) !important;
+  
+  /* Orange outer glow and inner shadow */
+  box-shadow: 0 0 15px rgba(255, 138, 101, 0.15),
+              inset 0 0 20px rgba(255, 138, 101, 0.05) !important;
+              
+  border-radius: 20px !important;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  padding: 24px !important; 
+}
+
+.feature-card:hover, .advantage-card:hover, .review-card:hover, .version-card:hover {
+  transform: translateY(-6px) !important;
+  background: linear-gradient(135deg, rgba(255, 138, 101, 0.25) 0%, rgba(25, 15, 15, 0.95) 100%) !important;
+  
+  /* Brighter border on hover */
+  border-color: rgba(255, 138, 101, 0.9) !important;
+  
+  /* Intense orange glow */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 
+              0 0 30px rgba(255, 138, 101, 0.4),
+              inset 0 0 20px rgba(255, 138, 101, 0.15) !important;
+}
+
+/* Make sure the login/register buttons inside also look premium to match */
+.header-action {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.header-action:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* =========================================================================
+   SAFE VISUAL ENHANCEMENTS (Text & Buttons)
+   ========================================================================= */
+
+/* Gradient text for main titles to make them pop against the dark background */
+h1, h2, .post-auth-title, .download-title, .version-card-label {
+  background: linear-gradient(135deg, #ffffff 0%, #ffe0b2 50%, #ff8a65 100%) !important;
+  background-size: 100% 100% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  text-shadow: 0 4px 20px rgba(255, 138, 101, 0.2) !important;
+  
+  /* Fix clipping/wrapping bugs across multiple lines */
+  -webkit-box-decoration-break: clone !important;
+  box-decoration-break: clone !important;
+  overflow: visible !important;
+  line-height: 1.3 !important;
+  
+  /* Ensure the text can wrap normally and doesn't get pushed off the screen */
+  white-space: normal !important;
+  word-break: break-word !important;
+  padding-right: 8px !important; /* Slight padding just for the last letter's curve */
+}
+
+/* Premium gradient for main call-to-action buttons */
+button, .login-button, .post-auth-submit, .download-btn, .btn {
+  background: linear-gradient(135deg, #ff8a65 0%, #e64a19 100%) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(230, 74, 25, 0.4) !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  border-radius: 12px !important;
+}
+
+button:hover, .login-button:hover, .post-auth-submit:hover, .download-btn:hover, .btn:hover {
+  background: linear-gradient(135deg, #ffab91 0%, #f4511e 100%) !important;
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 25px rgba(230, 74, 25, 0.6) !important;
+}
+
+/* Don't override the header actions with the heavy orange button style */
+.header-action {
+  background: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: none !important;
+}
+.header-action:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: none !important;
+}
+
+/* =========================================================================
+   NEW SAFE ENHANCEMENTS (Inputs & Scrollbar)
+   ========================================================================= */
+
+/* Sleek frosted glass inputs for the login/register forms */
+input, select, textarea, .admin-form-field__input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Beautiful sunset glow when typing in an input */
+input:focus, select:focus, textarea:focus, .admin-form-field__input:focus {
+  outline: none !important;
+  border-color: #ff8a65 !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 0 12px rgba(255, 138, 101, 0.4) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Custom premium scrollbar for the entire site */
+::-webkit-scrollbar {
+  width: 8px !important;
+}
+::-webkit-scrollbar-track {
+  background: #0b0b0b !important;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #6f42c1 0%, #ff8a65 100%) !important;
+  border-radius: 10px !important;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #906cd4 0%, #ffab91 100%) !important;
+}
+
+/* =========================================================================
+   MOUSE TRAIL PARTICLES
+   ========================================================================= */
+.cursor-particle {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  z-index: 99999;
+  filter: blur(2px);
+  animation: particle-fade 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes particle-fade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) translateY(10px);
+  }
+}
+
+/* =========================================================================
+   SHIMMERING LOGO ANIMATION & ICON
+   ========================================================================= */
+
+/* The link container */
+.header-brand-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  white-space: nowrap !important; /* PREVENT TEXT FROM WRAPPING */
+  text-decoration: none !important;
+}
+
+/* The text itself */
+.brand-shine {
+  font-size: 0 !important; /* Hide the original "SemenRecode" text */
+  white-space: nowrap !important;
+}
+
+/* Render the new shorter text "Semen" and apply the gradient to it */
+.brand-shine::after {
+  content: "Semen" !important;
+  font-size: 22px !important; /* Restore font size */
+  font-weight: 800 !important;
+  
+  /* Beautiful elegant shimmer using white and bright orange */
+  background: linear-gradient(270deg, #ffffff, #ffe0b2, #ff8a65, #ffffff, #ffe0b2) !important;
+  background-size: 300% 300% !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  animation: logoShimmer 2s linear infinite !important;
+  text-shadow: 0 0 10px rgba(255, 138, 101, 0.4) !important;
+}
+
+/* 
+   =========================================================================
+   NUKE THE OLD LOGO
+   ========================================================================= 
+   Hide anything inside the brand link that is NOT the main text (.brand-shine)
+*/
+.header-brand-link > *:not(.brand-shine), .header-brand-logo {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  width: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0 !important;
+  position: absolute !important;
+  pointer-events: none !important;
+}
+
+/* Inject the new custom icon (Header Logo) */
+.header-brand-link::before {
+  content: "";
+  display: inline-block;
+  width: 44px !important;  
+  height: 44px !important;
+  flex-shrink: 0 !important;
+  background-image: url('/assets/semenicon.png') !important;
+  background-size: contain !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  
+  /* Removed the orange mask-image trick so it stays its original white color */
+  background-color: transparent !important;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+  
+  filter: drop-shadow(0 0 10px rgba(255, 138, 101, 1)) !important;
+}
+
+/* 
+   =========================================================================
+   GIANT HERO LOGO
+   ========================================================================= 
+*/
+.hero-logo-mark {
+  /* Use mask trick to make the hero icon orange */
+  background: linear-gradient(135deg, #ffb74d 0%, #ff5252 100%) !important;
+  -webkit-mask-image: url('/assets/semenicon.png') !important;
+  -webkit-mask-size: contain !important;
+  -webkit-mask-position: center !important;
+  -webkit-mask-repeat: no-repeat !important;
+  mask-image: url('/assets/semenicon.png') !important;
+  mask-size: contain !important;
+  mask-position: center !important;
+  mask-repeat: no-repeat !important;
+  background-image: none !important; /* Ensure no underlying image breaks it */
+  
+  /* Sizing and glowing */
+  width: 140px !important;
+  height: 140px !important;
+  margin: 0 auto 30px auto !important;
+  filter: drop-shadow(0 0 40px rgba(255, 138, 101, 0.8)) !important;
+  
+  /* Hide any internal text or SVGs */
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+.hero-logo-mark::before, .hero-logo-mark::after, .hero-logo-mark > * {
+  display: none !important;
+}
+
+@keyframes logoShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 
+   =========================================================================
+   VIDEO FRAMES / MEDIA SECTION
+   ========================================================================= 
+*/
+.video-frame {
+  border: 1px solid rgba(255, 138, 101, 0.4) !important;
+  box-shadow: 0 0 15px rgba(255, 138, 101, 0.15) !important;
+  border-radius: 20px !important; /* Make corners nicely rounded */
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  overflow: hidden !important; /* Ensure the video inside respects the rounded corners */
+}
+
+.video-frame:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(255, 138, 101, 0.9) !important;
+  
+  /* Intense orange glow when hovered */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 
+              0 0 30px rgba(255, 138, 101, 0.4) !important;
+}
+
+/* Make the play button premium orange too */
+.video-frame__play {
+  background: linear-gradient(135deg, rgba(255,138,101,0.9) 0%, rgba(230,74,25,0.9) 100%) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 0 20px rgba(230, 74, 25, 0.5) !important;
+  color: white !important;
+}
+
+.video-frame:hover .video-frame__play {
+  transform: scale(1.1) translate(-50%, -50%) !important;
+  background: linear-gradient(135deg, #ffab91 0%, #f4511e 100%) !important;
+  box-shadow: 0 0 30px rgba(230, 74, 25, 0.8) !important;
+}
+
+/* 
+   =========================================================================
+   FOOTER ENHANCEMENTS
+   ========================================================================= 
+*/
+/* Strictly target the main footer container ONLY! */
+.footer {
+  border: 1px solid rgba(255, 138, 101, 0.4) !important;
+  box-shadow: 0 0 15px rgba(255, 138, 101, 0.1) !important;
+  border-radius: 20px !important;
+  background: linear-gradient(135deg, rgba(255, 138, 101, 0.05) 0%, rgba(15, 10, 10, 0.95) 100%) !important;
+}
+
+/* Remove the old blue 's' logo from the footer */
+.footer__mark,
+.footer .header-brand-logo,
+.footer a[href="/"] > svg:first-child {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+}
+
+/* Insert the custom logo next to the text */
+.footer__brand::before,
+.footer a[href="/"]::before {
+  content: "" !important;
+  display: inline-block !important;
+  width: 38px !important;
+  height: 38px !important;
+  background-image: url('/assets/semenicon.png') !important;
+  background-size: contain !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  margin-right: 12px !important;
+  vertical-align: middle !important;
+  filter: drop-shadow(0 0 8px rgba(255, 138, 101, 0.6)) !important;
+}
+
+/* Replace the credit text at the very bottom */
+.footer__credit {
+  font-size: 0 !important;
+  color: transparent !important;
+}
+.footer__credit * {
+  display: none !important;
+}
+.footer__credit::after {
+  content: "Protection for @SVITIK322 and @FUNCKNAMESHIED for @CABBITGUARD" !important;
+  font-size: 13px !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  display: block !important;
+  text-align: center !important;
+}
+
+/* Completely remove the Support block from the footer */
+.footer__support, 
+.footer__nav-group:last-child {
+  display: none !important;
+}
