@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Logs Viewer</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --panel-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --border: #334155;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .header button:hover {
+            background: var(--accent-hover);
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .empty-state {
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+        
+        #error-msg {
+            color: #ef4444;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Admin Auth Logs</h1>
+            <div>
+                <button onclick="fetchLogs()">Refresh Logs</button>
+                <button onclick="window.location.href='/svitikadminproruerweriweirweirikdskfdsfsf1230120310230123ksfdkfdsfskfslldsfjeiriwerwerjwejrdkfksdfkdsfsdkfdkfkdsfkdsfkdsfssecret'" style="background: var(--border); margin-left: 0.5rem;">Back to Panel</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>User</th>
+                        <th>Action</th>
+                        <th>IP Address</th>
+                    </tr>
+                </thead>
+                <tbody id="logs-body">
+                    <tr>
+                        <td colspan="4" class="empty-state">Loading logs...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="error-msg"></div>
+    </div>
+
+    <script>
+        const API_URL = "/api/svitikadminproruerweriweirweirikdskfdsfsf1230120310230123ksfdkfdsfskfslldsfjeiriwerwerjwejrdkfksdfkdsfsdkfdkfkdsfkdsfkdsfssecret/logs";
+        
+        function formatTime(isoStr) {
+            if (!isoStr) return "-";
+            const d = new Date(isoStr);
+            return d.toLocaleString();
+        }
+
+        async function fetchLogs() {
+            const tbody = document.getElementById("logs-body");
+            const errDiv = document.getElementById("error-msg");
+            errDiv.style.display = 'none';
+            tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Loading logs...</td></tr>';
+            
+            // Try common token keys
+            const token = localStorage.getItem("token") || localStorage.getItem("auth_token");
+            
+            try {
+                const res = await fetch(API_URL, {
+                    headers: {
+                        "Authorization": token ? `Bearer ${token}` : ""
+                    }
+                });
+                
+                if (res.status === 401 || res.status === 403) {
+                    throw new Error("Access Denied: You must be logged in as an Admin.");
+                }
+                
+                const data = await res.json();
+                
+                if (!Array.isArray(data) || data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" class="empty-state">No logs found.</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = data.map(log => `
+                    <tr>
+                        <td style="color: var(--text-muted); font-size: 0.875rem;">${formatTime(log.time)}</td>
+                        <td style="font-weight: 500;">${log.user || 'Unknown'}</td>
+                        <td><span class="badge">${log.action || 'Login'}</span></td>
+                        <td style="font-family: monospace;">${log.ip || '-'}</td>
+                    </tr>
+                `).join("");
+                
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state">Failed to load logs.</td></tr>';
+                errDiv.textContent = e.message || "Failed to fetch logs.";
+                errDiv.style.display = 'block';
+            }
+        }
+
+        // Auto-fetch on load
+        fetchLogs();
+    </script>
+</body>
+</html>

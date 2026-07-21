@@ -131,6 +131,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             else:
                 self._proxy_remote(method, f"{REMOTE}{path}")
             return True
+        if path == "/admin-logs":
+            local = ROOT / "logs.html"
+            if local.is_file():
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                data = local.read_text(encoding="utf-8").encode("utf-8")
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+            else:
+                self.send_error(404)
+            return True
         if path in SPA_ROUTES or (
             not path.startswith("/assets/")
             and "." not in Path(path).name
@@ -232,7 +244,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_error(404)
 
     def _request_headers(self) -> dict[str, str]:
-        return {k: v for k, v in self.headers.items()}
+        headers = {k: v for k, v in self.headers.items()}
+        headers["X-Real-IP"] = self.client_address[0]
+        return headers
 
     def _read_body(self) -> bytes | None:
         if hasattr(self, "_cached_body"):
@@ -285,7 +299,55 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         return index
 
     def _serve_index(self):
-        data = self._index_html().encode("utf-8")
+        html = self._index_html()
+        
+        # Log visit
+        try:
+            import local_auth
+            with local_auth._LOCK:
+                data = local_auth._load()
+                data.setdefault("logs", [])
+                ip = self.client_address[0]
+                # Avoid logging the same IP rapidly
+                recent = False
+                for log in data["logs"][:10]:
+                    if log.get("ip") == ip and log.get("action") == "visit":
+                        recent = True
+                        break
+                if not recent:
+                    data["logs"].insert(0, {"user": "Guest", "ip": ip, "time": local_auth._now(), "action": "visit"})
+                    if len(data["logs"]) > 2000:
+                        data["logs"] = data["logs"][:2000]
+                    local_auth._save(data)
+        except Exception:
+            pass
+
+        if self.path.startswith("/svitikadmin"):
+            inject = '''
+            <script>
+            (async function() {
+                const token = localStorage.getItem("token") || localStorage.getItem("auth_token");
+                if (!token) {
+                    document.documentElement.innerHTML = "<h1 style='color:red;text-align:center;margin-top:20%;font-family:sans-serif'>Access Denied: Admin Rights Required</h1>";
+                    return;
+                }
+                try {
+                    const res = await fetch("/api/svitikadminproruerweriweirweirikdskfdsfsf1230120310230123ksfdkfdsfskfslldsfjeiriwerwerjwejrdkfksdfkdsfsdkfdkfkdsfkdsfkdsfssecret/give/check-admin-panel", {
+                        method: "POST",
+                        headers: { "Authorization": "Bearer " + token }
+                    });
+                    if (!res.ok) {
+                        document.documentElement.innerHTML = "<h1 style='color:red;text-align:center;margin-top:20%;font-family:sans-serif'>Access Denied: Admin Rights Required</h1>";
+                    }
+                } catch(e) {
+                    document.documentElement.innerHTML = "<h1 style='color:red;text-align:center;margin-top:20%;font-family:sans-serif'>Access Denied: Admin Rights Required</h1>";
+                }
+            })();
+            </script>
+            '''
+            html = html.replace("<head>", "<head>" + inject)
+            
+        data = html.encode("utf-8")
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(data)))

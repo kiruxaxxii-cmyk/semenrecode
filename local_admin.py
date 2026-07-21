@@ -33,6 +33,8 @@ def _admin_user_or_403(token: str | None) -> tuple[dict[str, Any] | None, tuple[
         user = local_auth._user_from_token(data, token)
     if not user:
         return None, (401, {"message": "Not authenticated"})
+    if not _is_admin(user):
+        return None, (403, {"message": "Forbidden: Admin access required"})
     return user, None
 
 
@@ -96,6 +98,8 @@ def handle(
     user, denied = _admin_user_or_403(token)
     if denied:
         return denied
+    ip = headers.get("X-Real-IP", "Unknown")
+    print(f"[ADMIN LOG] User {user.get('username')} accessed admin panel API ({api_path}) from IP: {ip}")
 
     params = _parse_query(query)
     payload: dict[str, Any] = {}
@@ -106,6 +110,12 @@ def handle(
             payload = json.loads(body.decode("utf-8"))
         except Exception:
             payload = {}
+
+
+    if api_path == "/svitikadminproruerweriweirweirikdskfdsfsf1230120310230123ksfdkfdsfskfslldsfjeiriwerwerjwejrdkfksdfkdsfsdkfdkfkdsfkdsfkdsfssecret/logs" and method == "GET":
+        with local_auth._LOCK:
+            data = local_auth._load()
+            return 200, data.get("logs", [])
 
     if api_path == "/svitikadminproruerweriweirweirikdskfdsfsf1230120310230123ksfdkfdsfskfslldsfjeiriwerwerjwejrdkfksdfkdsfsdkfdkfkdsfkdsfkdsfssecret/give/check-admin-panel" and method == "POST":
         return 200, {"ok": True, "allowed": True}

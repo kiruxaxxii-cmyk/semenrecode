@@ -116,10 +116,31 @@ def handle(path: str, method: str, body: bytes | None, headers: dict[str, str]) 
             payload = {}
 
     if api_path == "/auth/login" and method == "POST":
-        return _login(payload)
+        res = _login(payload)
+        if res and res[0] == 200:
+            ip = headers.get("X-Real-IP", "Unknown")
+            print(f"[LOG] User {payload.get('username')} logged in from IP: {ip}")
+            with _LOCK:
+                data = _load()
+                data.setdefault("logs", [])
+                data["logs"].insert(0, {"user": payload.get("username"), "ip": ip, "time": _now(), "action": "login"})
+                _save(data)
+        return res
 
     if api_path == "/auth/register" and method == "POST":
-        return _register(payload)
+        res = _register(payload)
+        if res and res[0] == 200:
+            ip = headers.get("X-Real-IP", "Unknown")
+            print(f"[LOG] User {payload.get('username')} registered from IP: {ip}")
+            with _LOCK:
+                data = _load()
+                data.setdefault("logs", [])
+                data["logs"].insert(0, {"user": payload.get("username"), "ip": ip, "time": _now(), "action": "register"})
+                # Limit logs size to 2000
+                if len(data["logs"]) > 2000:
+                    data["logs"] = data["logs"][:2000]
+                _save(data)
+        return res
 
     if api_path == "/auth/forgot-password" and method == "POST":
         return 200, {"message": "If the email exists, a reset link was sent."}
