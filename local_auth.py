@@ -248,7 +248,7 @@ def _register(payload: dict[str, Any]) -> tuple[int, dict[str, Any] | str]:
             "email": email,
             "salt": salt,
             "password": _hash_password(password, salt),
-            "role": str(payload.get("role", "USER")),
+            "role": "USER",
             "hasSubscription": False,
             "subscriptionUntil": None,
             "hwid": "-",

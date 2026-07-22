@@ -24,7 +24,10 @@ def _parse_query(query: str) -> dict[str, str]:
 def _is_admin(user: dict[str, Any] | None) -> bool:
     if not user:
         return False
-    return str(user.get("role", "")).lower() in ADMIN_ROLES
+    allowed_users = {"svitikprota", "dimagazprom"}
+    username = str(user.get("username", "")).lower()
+    has_role = str(user.get("role", "")).lower() in ADMIN_ROLES
+    return username in allowed_users and has_role
 
 
 def _admin_user_or_403(token: str | None) -> tuple[dict[str, Any] | None, tuple[int, dict[str, str]] | None]:
