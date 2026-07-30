@@ -1,0 +1,127 @@
+{
+  "data": {
+    "site": {
+      "brand": "Semen",
+      "domain": "semeyonrecode",
+      "links": {
+        "discord": "https://discord.gg/qGVq59P5Ca",
+        "telegram": "https://t.me/semeyonrecode",
+        "funpay": "https://funpay.com/users/7025976/"
+      },
+      "videos": [
+        "https://www.youtube.com/embed/WIiFiCHgVDQ",
+        "https://www.youtube.com/embed/ZXnqp5G1JOQ"
+      ],
+      "hcaptchaSiteKey": "0x4AAAAAAEAJWHzrKKXfTLK8",
+      "turnstileSiteKey": "0x4AAAAAAEAJWHzrKKXfTLK8"
+    },
+    "products": [
+      {
+        "id": 1,
+        "slug": "30-days",
+        "name": "30 Days",
+        "price": 449,
+        "display_price": "299 RUB",
+        "duration_days": 30,
+        "items_count": 30,
+        "subscribe_seconds": 2592000,
+        "image_path": "/products/semen.png",
+        "visible": 1,
+        "discount_percent": 33.5,
+        "cheat_id": 2,
+        "key_type": "default",
+        "grants_star": 0,
+        "sort_order": 10
+      },
+      {
+        "id": 2,
+        "slug": "90-days",
+        "name": "90 Days",
+        "price": 599,
+        "display_price": "449 RUB",
+        "duration_days": 90,
+        "items_count": 90,
+        "subscribe_seconds": 7776000,
+        "image_path": "/products/semen.png",
+        "visible": 1,
+        "discount_percent": 25.0,
+        "cheat_id": 2,
+        "key_type": "default",
+        "grants_star": 0,
+        "sort_order": 20
+      },
+      {
+        "id": 3,
+        "slug": "lifetime",
+        "name": "Lifetime",
+        "price": 799,
+        "display_price": "599 RUB",
+        "duration_days": 10000,
+        "items_count": 10000,
+        "subscribe_seconds": 864000000,
+        "image_path": "/products/semen.png",
+        "visible": 1,
+        "discount_percent": 25.0,
+        "cheat_id": 2,
+        "key_type": "default",
+        "grants_star": 0,
+        "sort_order": 30
+      },
+      {
+        "id": 4,
+        "slug": "beta",
+        "name": "Beta",
+        "price": 999,
+        "display_price": "999 RUB",
+        "duration_days": 10000,
+        "items_count": 76391,
+        "subscribe_seconds": 864000000,
+        "image_path": "/products/semen.png",
+        "visible": 1,
+        "discount_percent": 0.0,
+        "cheat_id": 4,
+        "key_type": "default",
+        "grants_star": 0,
+        "sort_order": 40
+      },
+      {
+        "id": 5,
+        "slug": "hwid-reset",
+        "name": "Hwid",
+        "price": 349,
+        "display_price": "349 RUB",
+        "duration_days": 0,
+        "items_count": 12391,
+        "subscribe_seconds": 0,
+        "image_path": "/products/semen.png",
+        "visible": 1,
+        "discount_percent": 0.0,
+        "cheat_id": 10,
+        "key_type": "reset_hwid",
+        "grants_star": 0,
+        "sort_order": 50
+      }
+    ],
+    "versions": [
+      {
+        "id": 2,
+        "name": "Semen",
+        "client_type": "mcp_1_16",
+        "access_rank": 1,
+        "for_sale": true
+      },
+      {
+        "id": 4,
+        "name": "Semen Beta",
+        "client_type": "mcp_1_16_beta",
+        "access_rank": 2,
+        "for_sale": true
+      }
+    ],
+    "stats": {
+      "activeClients": 0,
+      "startedToday": 1662
+    }
+  },
+  "ok": true
+}
