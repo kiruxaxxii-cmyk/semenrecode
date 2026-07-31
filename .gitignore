@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 users.db
 *.db
+*.sqlite
 .DS_Store
 Thumbs.db
 *.log

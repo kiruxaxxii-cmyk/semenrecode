@@ -20,6 +20,33 @@ TURNSTILE_SITE_KEY = "0x4AAAAAAEAJWHzrKKXfTLK8"
 TURNSTILE_SECRET_KEY = "0x4AAAAAAEAJWMCkJXm_pQglJdZdMVo2Hb0"
 BACKEND_URL = "https://backend.semeyonrecode"
 
+# --- Cloudflare Turnstile Verification ---
+def verify_turnstile(token, remote_ip="127.0.0.1"):
+    """Verify Cloudflare Turnstile token. Returns (ok, error_message)."""
+    if not token:
+        return False, "Пройдите проверку на бота (Cloudflare Turnstile)"
+    try:
+        data = json.dumps({
+            "secret": TURNSTILE_SECRET_KEY,
+            "response": token,
+            "remoteip": remote_ip
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            result = json.loads(resp.read())
+        if result.get("success"):
+            return True, None
+        codes = result.get("error-codes", [])
+        return False, f"Проверка на бота не пройдена: {', '.join(codes)}"
+    except Exception as e:
+        print(f"[Turnstile] Verification error: {e}")
+        return False, "Ошибка проверки капчи"
+
 # --- SQLite Database Initialization ---
 def init_db():
     conn = sqlite3.connect(DB_PATH)
@@ -38,7 +65,7 @@ def init_db():
             is_staff INTEGER DEFAULT 0,
             memoryMb INTEGER DEFAULT 4096,
             totp_enabled INTEGER DEFAULT 0,
-            avatarPath TEXT DEFAULT '/avatars/cat_avatar.jpg',
+            avatarPath TEXT DEFAULT '/avatars/semenicon.png',
             created_at TEXT
         )
     ''')
@@ -90,14 +117,6 @@ def init_db():
         )
     ''')
 
-    # Seed Admin User if not exists
-    cursor.execute("SELECT id FROM users WHERE username = 'admin'")
-    if not cursor.fetchone():
-        cursor.execute('''
-            INSERT INTO users (username, password, email, role, rank, is_admin, is_staff, memoryMb, avatarPath, created_at)
-            VALUES ('admin', 'kX9#mP2$vL7!wQ4@Z9#Semen2026', 'admin@semeyonrecode', 'admin', 'Admin', 1, 1, 4096, '/avatars/cat_avatar.jpg', '2026-01-01T00:00:00Z')
-        ''')
-        print("[DB] Admin user seeded: admin / admin123")
 
     # Seed initial keys if empty
     cursor.execute("SELECT COUNT(*) FROM keys")
@@ -117,16 +136,38 @@ def init_db():
             VALUES ('SEMEN2026', 20, 'admin', 100)
         ''')
 
+        # Settings table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS settings (
+            key TEXT PRIMARY KEY,
+            value TEXT
+        )
+    ''')
+    cursor.execute("INSERT OR IGNORE INTO settings (key, value) VALUES ('download_url', 'https://semeyonrecode/Semen.exe')")
     conn.commit()
     conn.close()
 
 init_db()
 
 # --- Helper DB Functions ---
+
+# --- Railway.com PostgreSQL & SQLite DB Helper ---
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
 def get_db():
+    if DATABASE_URL and (DATABASE_URL.startswith("postgres://") or DATABASE_URL.startswith("postgresql://")):
+        try:
+            import psycopg2
+            from psycopg2.extras import RealDictCursor
+            url = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+            conn = psycopg2.connect(url, cursor_factory=RealDictCursor)
+            return conn
+        except Exception as e:
+            print("PostgreSQL connection error, falling back to SQLite:", e)
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
+
 
 def format_user(row):
     if not row:
@@ -142,8 +183,8 @@ def format_user(row):
         "is_staff": bool(row["is_staff"]),
         "memoryMb": row["memoryMb"],
         "totp_enabled": bool(row["totp_enabled"]),
-        "avatarPath": row["avatarPath"] or "/avatars/cat_avatar.jpg",
-        "avatar_url": row["avatarPath"] or "/avatars/cat_avatar.jpg",
+        "avatarPath": "/semenicon.png" or "/avatars/semenicon.png",
+        "avatar_url": "/semenicon.png" or "/avatars/semenicon.png",
         "created_at": row["created_at"] or "2026-01-01T00:00:00Z",
         "subscription": {
             "active": True,
@@ -151,6 +192,20 @@ def format_user(row):
             "expires_at": "2036-01-01T00:00:00Z"
         }
     }
+
+
+def get_setting(key_name, default=""):
+    conn = get_db()
+    c = conn.cursor()
+    row = c.execute("SELECT value FROM settings WHERE key = ?", (key_name,)).fetchone()
+    conn.close()
+    return row["value"] if row else default
+
+def set_setting(key_name, val):
+    conn = get_db()
+    conn.execute("INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)", (key_name, val))
+    conn.commit()
+    conn.close()
 
 def get_admin_dashboard_data():
     conn = get_db()
@@ -194,12 +249,72 @@ def get_admin_dashboard_data():
         },
         "currentIp": "127.0.0.1",
         "products": [
-            {"id": 1, "slug": "30-days", "name": "30 Days", "price": 449, "display_price": "299 RUB", "duration_days": 30, "items_count": 30, "cheat_id": 2, "key_type": "default"},
-            {"id": 2, "slug": "90-days", "name": "90 Days", "price": 599, "display_price": "449 RUB", "duration_days": 90, "items_count": 90, "cheat_id": 2, "key_type": "default"},
-            {"id": 3, "slug": "lifetime", "name": "Lifetime", "price": 799, "display_price": "599 RUB", "duration_days": 10000, "items_count": 10000, "cheat_id": 2, "key_type": "default"},
-            {"id": 4, "slug": "beta", "name": "Beta", "price": 999, "display_price": "999 RUB", "duration_days": 10000, "items_count": 76391, "cheat_id": 4, "key_type": "default"},
-            {"id": 5, "slug": "hwid-reset", "name": "Hwid", "price": 349, "display_price": "349 RUB", "duration_days": 0, "items_count": 12391, "cheat_id": 10, "key_type": "reset_hwid"}
-        ],
+            {
+                        "id": 1,
+                        "slug": "30-days",
+                        "name": "30 Days",
+                        "price": 199,
+                        "display_price": "199 RUB",
+                        "duration_days": 30,
+                        "items_count": 30,
+                        "cheat_id": 2,
+                        "key_type": "default",
+                        "image_path": "/products/semen.png?v=2",
+                        "discount_percent": 34
+            },
+            {
+                        "id": 2,
+                        "slug": "90-days",
+                        "name": "90 Days",
+                        "price": 319,
+                        "display_price": "319 RUB",
+                        "duration_days": 90,
+                        "items_count": 90,
+                        "cheat_id": 2,
+                        "key_type": "default",
+                        "image_path": "/products/semen.png?v=2",
+                        "discount_percent": 25
+            },
+            {
+                        "id": 3,
+                        "slug": "lifetime",
+                        "name": "Lifetime",
+                        "price": 399,
+                        "display_price": "399 RUB",
+                        "duration_days": 10000,
+                        "items_count": 10000,
+                        "cheat_id": 2,
+                        "key_type": "default",
+                        "image_path": "/products/semen.png?v=2",
+                        "discount_percent": 25
+            },
+            {
+                        "id": 4,
+                        "slug": "beta",
+                        "name": "Beta",
+                        "price": 299,
+                        "display_price": "299 RUB",
+                        "duration_days": 10000,
+                        "items_count": 76391,
+                        "cheat_id": 4,
+                        "key_type": "default",
+                        "image_path": "/products/semen.png?v=2",
+                        "discount_percent": 0
+            },
+            {
+                        "id": 5,
+                        "slug": "hwid-reset",
+                        "name": "Hwid",
+                        "price": 199,
+                        "display_price": "199 RUB",
+                        "duration_days": 0,
+                        "items_count": 12391,
+                        "cheat_id": 10,
+                        "key_type": "reset_hwid",
+                        "image_path": "/products/semen.png?v=2",
+                        "discount_percent": 0
+            }
+],
         "versions": [
             {"id": 2, "name": "Semen", "client_type": "mcp_1_16", "access_rank": 1, "for_sale": True},
             {"id": 4, "name": "Semen Beta", "client_type": "mcp_1_16_beta", "access_rank": 2, "for_sale": True}
@@ -214,6 +329,7 @@ def get_admin_dashboard_data():
         "logs": [
             {"id": 1, "action": "LOGIN", "user": "admin", "ip": "127.0.0.1", "timestamp": "2026-07-29T21:56:00Z", "details": "Successful admin login"}
         ],
+        "downloadUrl": get_setting("download_url", "https://semeyonrecode/Semen.exe"),
         "diagnostics": {
             "serverStatus": "Online",
             "cpuUsage": "12%",
@@ -288,10 +404,11 @@ class SPARequestHandler(http.server.SimpleHTTPRequestHandler):
         conn.close()
         return format_user(user_row)
 
-    def create_session(self, user_id):
-        token = hashlib.sha256(f"{user_id}-{time.time()}-{random.random()}".encode()).hexdigest()
+    def create_session(self, user_obj):
+        u_id = user_obj["id"] if isinstance(user_obj, dict) else user_obj
+        token = hashlib.sha256(f"{u_id}-{time.time()}-{random.random()}".encode()).hexdigest()
         conn = get_db()
-        conn.execute("INSERT INTO sessions (token, user_id, created_at) VALUES (?, ?, ?)", (token, user_id, int(time.time())))
+        conn.execute("INSERT INTO sessions (token, user_id, created_at) VALUES (?, ?, ?)", (token, u_id, int(time.time())))
         conn.commit()
         conn.close()
         return token
@@ -317,22 +434,28 @@ class SPARequestHandler(http.server.SimpleHTTPRequestHandler):
                     return self._send_json({"ok": False, "message": "Unauthenticated"}, 401)
 
             if clean_path == "api/profile/download-launcher":
-                dummy_exe = b"Semen Launcher Executable File Placeholder"
-                self.send_response(200)
-                self.send_header("Content-Type", "application/octet-stream")
-                self.send_header("Content-Disposition", 'attachment; filename="Semen.exe"')
-                self.send_header("Content-Length", str(len(dummy_exe)))
+                user = self.get_session_user()
+                if not user:
+                    return self._send_json({"ok": False, "message": "Авторизуйтесь для скачивания!"}, 401)
+                
+                # Check active subscription / key in DB
+                conn = get_db()
+                c = conn.cursor()
+                user_key = c.execute("SELECT id FROM keys WHERE username = ? AND status = 'activated' LIMIT 1", (user["username"],)).fetchone()
+                conn.close()
+                
+                if not user_key and not user.get("is_admin"):
+                    return self._send_json({"ok": False, "message": "Для скачивания требуется активная подписка!"}, 403)
+                
+                target_url = get_setting("download_url", "https://semeyonrecode/Semen.exe")
+                
+                # Send JSON response with downloadUrl or HTTP 302 Redirect
+                self.send_response(302)
+                self.send_header("Location", target_url)
+                self.send_header("Access-Control-Allow-Origin", "*")
                 self.end_headers()
-                self.wfile.write(dummy_exe)
                 return
 
-            if "admin/dashboard" in clean_path:
-                if user and user.get("is_admin"):
-                    return self._send_json({"ok": True, "data": get_admin_dashboard_data()})
-                elif user:
-                    return self._send_json({"ok": False, "message": "Access forbidden"}, 403)
-                else:
-                    return self._send_json({"ok": False, "message": "Unauthenticated"}, 401)
 
             if target_path.is_file():
                 self.send_response(200)
@@ -368,6 +491,11 @@ class SPARequestHandler(http.server.SimpleHTTPRequestHandler):
                 return self._send_json({"ok": True, "data": get_admin_dashboard_data()})
 
         # Static files & SPA Routing
+        if target_path.suffix in ['.db', '.sqlite', '.py', '.env']:
+            self.send_response(403)
+            self.end_headers()
+            return
+            
         if target_path.is_file():
             return super().do_GET()
         else:
@@ -390,9 +518,15 @@ class SPARequestHandler(http.server.SimpleHTTPRequestHandler):
 
             # --- AUTH: LOGIN ---
             if self.path == "/api/auth/login":
-                captcha_token = payload.get("hcaptchaToken") or payload.get("turnstileToken")
-                if not captcha_token:
-                    return self._send_json({"ok": False, "message": "Пожалуйста, пройдите капчу Cloudflare!"}, 400)
+                # Cloudflare Turnstile verification
+                # Launcher bypass — skip Turnstile for the official launcher
+                launcher_key = self.headers.get("X-Launcher-Key", "")
+                if launcher_key != "SemenLauncher_s3cr3t_bypass_2026":
+                    cf_token = payload.get("turnstileToken") or payload.get("cfToken") or payload.get("token")
+                    ts_ok, ts_err = verify_turnstile(cf_token, self.client_address[0])
+                    if not ts_ok:
+                        return self._send_json({"ok": False, "message": ts_err or "Пройдите проверку на бота!"}, 400)
+
                 login_input = payload.get("login") or payload.get("username") or ""
                 password_input = payload.get("password") or ""
 
@@ -409,12 +543,46 @@ class SPARequestHandler(http.server.SimpleHTTPRequestHandler):
                 conn.close()
                 return self._send_json({"ok": False, "message": "Неверный логин или пароль"}, 401)
 
+            # --- LAUNCHER: HWID CHECK/BIND ---
+            if self.path == "/api/launcher/hwid":
+                if not user:
+                    return self._send_json({"ok": False, "message": "Unauthorized"}, 401)
+                hwid = payload.get("hwid", "").strip()
+                if not hwid:
+                    return self._send_json({"ok": False, "message": "HWID not provided"}, 400)
+
+                conn = get_db()
+                c = conn.cursor()
+                row = c.execute("SELECT hwid FROM users WHERE id = ?", (user["id"],)).fetchone()
+                stored_hwid = row["hwid"] if row and "hwid" in row.keys() else None
+
+                if stored_hwid is None or stored_hwid == "" or stored_hwid == "None":
+                    # First launch — bind HWID
+                    try:
+                        c.execute("UPDATE users SET hwid = ? WHERE id = ?", (hwid, user["id"]))
+                        conn.commit()
+                    except Exception:
+                        pass
+                    conn.close()
+                    return self._send_json({"ok": True, "message": "HWID bound"})
+                elif stored_hwid != hwid:
+                    conn.close()
+                    return self._send_json({"ok": False, "message": "Запуск с другого устройства запрещён! HWID не совпадает."}, 403)
+                else:
+                    conn.close()
+                    return self._send_json({"ok": True, "message": "HWID OK"})
+
             # --- AUTH: REGISTER ---
             if self.path == "/api/auth/register":
-                captcha_token = payload.get("hcaptchaToken") or payload.get("turnstileToken")
-                if not captcha_token:
-                    return self._send_json({"ok": False, "message": "Пожалуйста, пройдите капчу Cloudflare!"}, 400)
+                # Cloudflare Turnstile verification
+                cf_token = payload.get("turnstileToken") or payload.get("cfToken") or payload.get("token")
+                ts_ok, ts_err = verify_turnstile(cf_token, self.client_address[0])
+                if not ts_ok:
+                    return self._send_json({"ok": False, "message": ts_err or "Пройдите проверку на бота!"}, 400)
+
                 username = payload.get("username", "").strip()
+                if not re.match(r'^[a-zA-Z0-9]{3,16}$', username):
+                    return self._send_json({"ok": False, "message": "Никнейм должен содержать только английские буквы и цифры (от 3 до 16 символов)"}, 400)
                 password = payload.get("password", "").strip()
                 email = payload.get("email", "").strip()
 
@@ -437,7 +605,7 @@ class SPARequestHandler(http.server.SimpleHTTPRequestHandler):
 
                 c.execute('''
                     INSERT INTO users (username, password, email, role, rank, is_admin, is_staff, memoryMb, avatarPath, created_at)
-                    VALUES (?, ?, ?, 'user', 'User', 0, 0, 4096, '/avatars/cat_avatar.jpg', ?)
+                    VALUES (?, ?, ?, 'user', 'User', 0, 0, 4096, '/avatars/semenicon.png', ?)
                 ''', (username, password, email or f"{username}@semeyonrecode", time.strftime("%Y-%m-%dT%H:%M:%SZ")))
                 
                 user_id = c.lastrowid
@@ -524,7 +692,31 @@ class SPARequestHandler(http.server.SimpleHTTPRequestHandler):
                     conn.close()
                     return self._send_json({"ok": True, "data": {"key": new_key}})
 
-            # --- ADMIN ENDPOINTS ---
+            
+            if self.path == "/api/profile/payments/quote":
+                product_slug = payload.get("productSlug") or "30-days"
+                price_map = {"30-days": 199, "90-days": 319, "lifetime": 399, "beta": 299, "hwid-reset": 199}
+                price_val = price_map.get(product_slug, 199)
+                return self._send_json({"ok": True, "data": {"price": f"{price_val} RUB", "numericPrice": price_val, "discountPercent": 0}})
+
+            if self.path == "/api/profile/payments/create":
+                provider = (payload.get("provider") or "funpay").lower()
+                if "funpay" in provider:
+                    checkout_url = "https://funpay.com/users/13291040/"
+                else:
+                    checkout_url = "https://t.me/svitik322"
+                return self._send_json({"ok": True, "data": {"checkout": {"url": checkout_url}, "payment": {"id": f"pay-{random.randint(1000,9999)}"}}})
+
+            if self.path == "/api/admin/settings/download-url":
+                if not user or not user.get("is_admin"):
+                    return self._send_json({"ok": False, "message": "Access forbidden"}, 403)
+                new_url = payload.get("downloadUrl", "").strip()
+                if new_url:
+                    set_setting("download_url", new_url)
+                    return self._send_json({"ok": True, "message": "Ссылка на скачивание успешно сохранена!", "downloadUrl": new_url})
+                return self._send_json({"ok": False, "message": "Укажите правильную ссылку!"}, 400)
+
+# --- ADMIN ENDPOINTS ---
             if self.path == "/api/admin/keys/generate":
                 if not user or not user.get("is_admin"):
                     return self._send_json({"ok": False, "message": "Access forbidden"}, 403)
